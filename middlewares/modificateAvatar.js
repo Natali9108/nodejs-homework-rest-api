@@ -1,5 +1,4 @@
 import Jimp from "jimp";
-import path from "path";
 import fs from "fs/promises";
 
 import { HttpError } from "../helpers/index.js";
