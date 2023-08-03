@@ -2,6 +2,8 @@ import express from "express";
 import userController from "../../controllers/user/index.js";
 import schemas from "../../schemas/index.js";
 import {
+  modificateAvatar,
+  upload,
   authenticate,
   validateBody,
   isEmptyBody,
@@ -32,11 +34,16 @@ usersRouter.patch(
   userController.updateSubscription
 );
 
-usersRouter.post(
-  "/logout",
+usersRouter.patch(
+  "/avatars",
   authenticate,
 
-  userController.logout
+  upload.single("avatarURL"),
+
+  modificateAvatar,
+  userController.updateAvatar
 );
+
+usersRouter.post("/logout", authenticate, userController.logout);
 
 export default usersRouter;

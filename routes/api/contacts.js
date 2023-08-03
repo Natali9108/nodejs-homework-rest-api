@@ -2,6 +2,7 @@ import express from "express";
 import contactsController from "../../controllers/contacts/index.js";
 import schemas from "../../schemas/index.js";
 import {
+  upload,
   authenticate,
   validateBody,
   isValidId,
@@ -18,6 +19,7 @@ contactsRouter.get("/:contactId", isValidId, contactsController.getById);
 
 contactsRouter.post(
   "/",
+  upload.single("avatarURL"),
   isEmptyBody,
   validateBody(schemas.addSchema),
   contactsController.add

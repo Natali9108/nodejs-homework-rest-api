@@ -3,6 +3,7 @@ import register from "./register.js";
 import login from "./login.js";
 import getCurrent from "./getCurrent.js";
 import updateSubscription from "./updateSubscription.js";
+import updateAvatar from "./updateAvatar.js";
 import logout from "./logout.js";
 
 const userController = {
@@ -10,6 +11,7 @@ const userController = {
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   updateSubscription: ctrlWrapper(updateSubscription),
+  updateAvatar: ctrlWrapper(updateAvatar),
   logout: ctrlWrapper(logout),
 };
 

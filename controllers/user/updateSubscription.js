@@ -1,5 +1,4 @@
 import { User } from "../../models/index.js";
-import { HttpError } from "../../helpers/index.js";
 
 const updateSubscription = async (req, res) => {
   const { _id } = req.user;
