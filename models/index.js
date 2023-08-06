@@ -1,2 +1,4 @@
-export { default as Contact } from "./contactModel.js";
-export { default as User } from "./userModel.js";
+const User = require("./userModel");
+const Contact = require("./contactModel");
+
+module.exports = { User, Contact };

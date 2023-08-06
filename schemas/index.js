@@ -1,6 +1,5 @@
-import { addSchema } from "./contactSchemas.js";
-import { updateFavoriteSchema } from "./contactSchemas.js";
-import { joiUserSchemas, joiUpdateSubscription } from "./userSchemas.js";
+const { joiUserSchemas, joiUpdateSubscription } = require("./userSchemas");
+const { addSchema, updateFavoriteSchema } = require("./contactSchemas");
 
 const schemas = {
   addSchema,
@@ -9,4 +8,4 @@ const schemas = {
   joiUpdateSubscription,
 };
 
-export default schemas;
+module.exports = schemas;

@@ -1,1 +1,3 @@
-export { emailRegexp, subscriptionList } from "./userConstans.js";
+const { emailRegexp, subscriptionList } = require("./userConstans");
+
+module.exports = { emailRegexp, subscriptionList };

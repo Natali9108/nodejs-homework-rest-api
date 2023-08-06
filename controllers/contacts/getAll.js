@@ -1,8 +1,8 @@
-import { query } from "express";
-import { Contact } from "../../models/index.js";
+const { Contact } = require("../../models");
 
 const getAll = async (req, res) => {
-  const { _id: owner } = req.user;
+  console.log(req.user);
+  const { id: owner } = req.user;
   const { page = 1, limit = 20, ...query } = req.query;
   const skip = (page - 1) * limit;
   const result = await Contact.find(
@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
       skip,
       limit,
     }
-  ).populate("owner");
+  ).populate("owner", "email");
 
   res.json({
     status: "succes",
@@ -22,4 +22,4 @@ const getAll = async (req, res) => {
   });
 };
 
-export default getAll;
+module.exports = getAll;

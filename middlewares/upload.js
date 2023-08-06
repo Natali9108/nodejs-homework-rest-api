@@ -1,5 +1,5 @@
-import multer from "multer";
-import path from "path";
+const multer = require("multer");
+const path = require("path");
 
 const destination = path.resolve("temp");
 
@@ -19,4 +19,4 @@ const limits = {
 
 const upload = multer({ storage, limits });
 
-export default upload;
+module.exports = upload;

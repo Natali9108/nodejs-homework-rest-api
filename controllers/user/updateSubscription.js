@@ -1,9 +1,9 @@
-import { User } from "../../models/index.js";
+const { User } = require("../../models");
 
 const updateSubscription = async (req, res) => {
-  const { _id } = req.user;
+  const { id } = req.user;
 
-  const newUser = await User.findByIdAndUpdate(_id, req.body, {
+  const newUser = await User.findByIdAndUpdate(id, req.body, {
     new: true,
   });
 
@@ -14,4 +14,4 @@ const updateSubscription = async (req, res) => {
   });
 };
 
-export default updateSubscription;
+module.exports = updateSubscription;

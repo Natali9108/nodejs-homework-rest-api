@@ -1,24 +1,34 @@
-import fs from "fs/promises";
-import path from "path";
+const fs = require("fs/promises");
+const path = require("path");
+const Jimp = require("jimp");
 
-import { User } from "../../models/index.js";
+const { User } = require("../../models");
+const { HttpError } = require("../../helpers");
 
-const avatarPath = path.resolve("public", "avatars");
+const avatarPath = path.resolve("tmp", "avatars");
 
 const updateAvatar = async (req, res) => {
-  const { _id } = req.user;
+  const { id } = req.user;
+
+  if (!req.file) {
+    throw HttpError(400, "Add file");
+  }
 
   const { path: oldPath, filename } = req.file;
-  const avatarName = `${_id}_${filename}`;
+  const avatarName = `${id}_${filename}`;
   const newPath = path.join(avatarPath, avatarName);
   await fs.rename(oldPath, newPath);
   const avatarURL = path.join("avatars", avatarName);
 
-  const result = await User.findByIdAndUpdate(
-    _id,
-    { avatarURL },
-    { new: true }
-  );
+  try {
+    const image = await Jimp.read(newPath);
+    image.resize(250, 250).write(newPath);
+  } catch (error) {
+    fs.unlink(newPath);
+    throw HttpError(400, error.message);
+  }
+
+  const result = await User.findByIdAndUpdate(id, { avatarURL }, { new: true });
 
   res.json({
     status: "success",
@@ -27,4 +37,4 @@ const updateAvatar = async (req, res) => {
   });
 };
 
-export default updateAvatar;
+module.exports = updateAvatar;

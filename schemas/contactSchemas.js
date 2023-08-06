@@ -1,13 +1,15 @@
-import Joi from "joi";
-import { customMessages } from "./schemaConstans.js";
+const Joi = require("joi");
+const { customMessages } = require("./schemaConstans.js");
 
-export const addSchema = Joi.object({
+const addSchema = Joi.object({
   name: Joi.string().min(2).max(16).required(),
   email: Joi.string().email().required(),
   phone: Joi.string().required(),
   favorite: Joi.boolean(),
 }).messages(customMessages);
 
-export const updateFavoriteSchema = Joi.object({
+const updateFavoriteSchema = Joi.object({
   favorite: Joi.boolean().required(),
 }).messages(customMessages);
+
+module.exports = { addSchema, updateFavoriteSchema };

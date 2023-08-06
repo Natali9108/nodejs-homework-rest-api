@@ -1,7 +1,7 @@
-import Jimp from "jimp";
-import fs from "fs/promises";
+const Jimp = require("jimp");
+const fs = require("fs/promises");
 
-import { HttpError } from "../helpers/index.js";
+const { HttpError } = require("../helpers");
 
 const modificateAvatar = async (req, res, next) => {
   if (!req.file) {
@@ -13,11 +13,11 @@ const modificateAvatar = async (req, res, next) => {
   try {
     const image = await Jimp.read(path);
     image.resize(250, 250).write(path);
-    next();
   } catch (error) {
-    fs.unlink(path);
     next(HttpError(400, error.message));
+    fs.unlink(path);
   }
+  next();
 };
 
-export default modificateAvatar;
+module.exports = modificateAvatar;

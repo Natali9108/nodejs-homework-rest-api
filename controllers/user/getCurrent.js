@@ -1,7 +1,15 @@
-const getCurrent = async (req, res) => {
-  const { email, subscription } = req.user;
+const { User } = require("../../models");
 
-  res.json({ email, subscription });
+const getCurrent = async (req, res) => {
+  const { id } = req.user;
+
+  const user = await User.findById(id);
+
+  res.status(200);
+  res.json({
+    code: 200,
+    user: { email: user.email, subscription: user.subscription },
+  });
 };
 
-export default getCurrent;
+module.exports = getCurrent;

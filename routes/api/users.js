@@ -1,13 +1,21 @@
-import express from "express";
-import userController from "../../controllers/user/index.js";
-import schemas from "../../schemas/index.js";
-import {
-  modificateAvatar,
-  upload,
-  authenticate,
-  validateBody,
+const express = require("express");
+
+const {
   isEmptyBody,
-} from "../../middlewares/index.js";
+  validateBody,
+  authenticate,
+  upload,
+} = require("../../middlewares");
+const schemas = require("../../schemas");
+const userController = require("../../controllers/user");
+// import schemas from "../../schemas/index.js";
+// import {
+//   modificateAvatar,
+//   upload,
+//   authenticate,
+//   validateBody,
+//   isEmptyBody,
+// } from "../../middlewares/index.js";
 
 const usersRouter = express.Router();
 
@@ -37,13 +45,11 @@ usersRouter.patch(
 usersRouter.patch(
   "/avatars",
   authenticate,
-
   upload.single("avatarURL"),
-
-  modificateAvatar,
+  //   // modificateAvatar,
   userController.updateAvatar
 );
 
 usersRouter.post("/logout", authenticate, userController.logout);
 
-export default usersRouter;
+module.exports = usersRouter;

@@ -1,5 +1,5 @@
-import { Contact } from "../../models/index.js";
-import { HttpError } from "../../helpers/index.js";
+const { Contact } = require("../../models");
+const { HttpError } = require("../../helpers");
 
 const deleteById = async (req, res, next) => {
   const { contactId } = req.params;
@@ -9,7 +9,8 @@ const deleteById = async (req, res, next) => {
     throw HttpError(404, `Contact with id=${contactId} not found`);
   }
 
-  res.status(200).json({ message: "contact deleted" });
+  res.status(200);
+  res.json({ message: "contact deleted" });
 };
 
-export default deleteById;
+module.exports = deleteById;

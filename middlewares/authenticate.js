@@ -1,28 +1,23 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
-import { User } from "../models/index.js";
-import { ctrlWrapper, HttpError } from "../helpers/index.js";
+const { ctrlWrapper, HttpError } = require("../helpers");
 
 const { JWT_SECRET } = process.env;
 
 const authenticate = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
-  if (!token || bearer !== "Bearer") {
+  if (!token && bearer !== "Bearer") {
     throw HttpError(401);
   }
-
   try {
-    const { id } = jwt.verify(token, JWT_SECRET);
-    const user = await User.findById(id);
-    if (!user || !user.token) {
-      throw HttpError(401);
-    }
-    req.user = user;
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+
     next();
   } catch {
     throw HttpError(401);
   }
 };
 
-export default ctrlWrapper(authenticate);
+module.exports = ctrlWrapper(authenticate);

@@ -1,5 +1,5 @@
-import { Contact } from "../../models/index.js";
-import { HttpError } from "../../helpers/index.js";
+const { Contact } = require("../../models");
+const { HttpError } = require("../../helpers");
 
 const updateFavorite = async (req, res) => {
   const { contactId } = req.params;
@@ -14,4 +14,4 @@ const updateFavorite = async (req, res) => {
   res.json({ status: "success", code: 200, data: { result } });
 };
 
-export default updateFavorite;
+module.exports = updateFavorite;
