@@ -1,7 +1,8 @@
-import bcrypt from "bcrypt";
+const bcrypt = require("bcrypt");
+const glavatar = require("gravatar");
 
-import { User } from "../../models/index.js";
-import { HttpError } from "../../helpers/index.js";
+const { User } = require("../../models");
+const { HttpError } = require("../../helpers");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -11,11 +12,22 @@ const register = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  const avatarURL = glavatar.url(email);
 
-  res
-    .status(201)
-    .json({ email: newUser.email, subscription: newUser.subscription });
+  const newUser = await User.create({
+    ...req.body,
+    avatarURL,
+    password: hashPassword,
+  });
+
+  res.status(201);
+  res.json({
+    code: 200,
+    user: {
+      email: newUser.email,
+      subscription: newUser.subscription,
+    },
+  });
 };
 
-export default register;
+module.exports = register;

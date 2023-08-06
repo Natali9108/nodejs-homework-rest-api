@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
-import { handleMongooseError, handleUpdateValidate } from "./hooks.js";
+const { handleMongooseError, handleUpdateValidate } = require("./hooks");
 
 const contactSchema = new Schema(
   {
@@ -22,6 +22,7 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
     },
+
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",
@@ -38,4 +39,4 @@ contactSchema.post("findOneAndUpdate", handleMongooseError);
 
 const Contact = model("contact", contactSchema);
 
-export default Contact;
+module.exports = Contact;

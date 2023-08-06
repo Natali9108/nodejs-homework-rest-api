@@ -1,8 +1,8 @@
-import Joi from "joi";
-import { emailRegexp, subscriptionList } from "../constans/index.js";
-import { customMessages, emailPaternMessage } from "./schemaConstans.js";
+const Joi = require("joi");
+const { emailRegexp, subscriptionList } = require("../constans");
+const { customMessages, emailPaternMessage } = require("./schemaConstans");
 
-export const joiUserSchemas = Joi.object({
+const joiUserSchemas = Joi.object({
   password: Joi.string().min(8).required(),
   email: Joi.string()
     .pattern(emailRegexp)
@@ -11,8 +11,10 @@ export const joiUserSchemas = Joi.object({
   subscription: Joi.string().valid(...subscriptionList),
 }).messages(customMessages);
 
-export const joiUpdateSubscription = Joi.object({
+const joiUpdateSubscription = Joi.object({
   subscription: Joi.string()
     .valid(...subscriptionList)
     .required(),
 }).messages(customMessages);
+
+module.exports = { joiUpdateSubscription, joiUserSchemas };

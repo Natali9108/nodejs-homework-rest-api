@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
-import { handleMongooseError, handleUpdateValidate } from "./hooks.js";
-import { emailRegexp, subscriptionList } from "../constans/index.js";
+const { Schema, model } = require("mongoose");
+const { handleMongooseError, handleUpdateValidate } = require("./hooks");
+const { emailRegexp, subscriptionList } = require("../constans");
 
 const userSchema = new Schema(
   {
@@ -20,7 +20,10 @@ const userSchema = new Schema(
       enum: subscriptionList,
       default: "starter",
     },
-    token: String,
+    avatarURL: {
+      type: String,
+    },
+    token: { type: String, default: null },
   },
   { versionKey: false, timestamps: true }
 );
@@ -33,4 +36,4 @@ userSchema.post("findOneAndUpdate", handleMongooseError);
 
 const User = model("user", userSchema);
 
-export default User;
+module.exports = User;

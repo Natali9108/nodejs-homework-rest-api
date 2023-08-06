@@ -1,38 +1,43 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-import { User } from "../../models/index.js";
-import { HttpError } from "../../helpers/index.js";
+const { User } = require("../../models");
+const { HttpError } = require("../../helpers");
 
 const { JWT_SECRET } = process.env;
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) {
+  const candidate = await User.findOne({ email });
+  if (!candidate) {
     throw HttpError(401, "Email or password is wrong");
   }
 
-  const passwordCompare = await bcrypt.compare(password, user.password);
+  const passwordCompare = await bcrypt.compare(password, candidate.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password is wrong");
   }
 
   const payload = {
-    id: user._id,
+    id: candidate._id,
   };
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-  await User.findByIdAndUpdate(user._id, { token });
 
+  candidate.token = token;
+
+  await candidate.save();
+
+  res.status(200);
   res.json({
+    code: 200,
     token,
     user: {
-      email: user.email,
-      subscription: user.subscription,
+      email: candidate.email,
+      subscription: candidate.subscription,
     },
   });
 };
 
-export default login;
+module.exports = login;

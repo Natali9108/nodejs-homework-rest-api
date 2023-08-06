@@ -1,18 +1,18 @@
-import { ctrlWrapper } from "../../helpers/index.js";
-import getAll from "./getAll.js";
-import getById from "./getById.js";
-import add from "./add.js";
-import updateById from "./updateById.js";
-import updateFavorite from "./updateFavorite.js";
-import deleteById from "./deleteById.js";
+const { ctrlWrapper } = require("../../helpers");
+const getAll = require("./getAll");
+const getById = require("./getById");
+const add = require("./add");
+const updateById = require("./updateById");
+const updateFavorite = require("./updateFavorite");
+const deleteById = require("./deleteById");
 
 const contactsController = {
-  getById: ctrlWrapper(getById),
   getAll: ctrlWrapper(getAll),
+  getById: ctrlWrapper(getById),
   add: ctrlWrapper(add),
   updateById: ctrlWrapper(updateById),
   updateFavorite: ctrlWrapper(updateFavorite),
   deleteById: ctrlWrapper(deleteById),
 };
 
-export default contactsController;
+module.exports = contactsController;
