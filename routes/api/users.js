@@ -8,14 +8,6 @@ const {
 } = require("../../middlewares");
 const schemas = require("../../schemas");
 const userController = require("../../controllers/user");
-// import schemas from "../../schemas/index.js";
-// import {
-//   modificateAvatar,
-//   upload,
-//   authenticate,
-//   validateBody,
-//   isEmptyBody,
-// } from "../../middlewares/index.js";
 
 const usersRouter = express.Router();
 
@@ -24,6 +16,14 @@ usersRouter.post(
   isEmptyBody,
   validateBody(schemas.joiUserSchemas),
   userController.register
+);
+
+usersRouter.get("/verify/:verificationToken", userController.verify);
+
+usersRouter.post(
+  "/verify",
+  validateBody(schemas.joiUserEmailSchemas),
+  userController.resendVerifyEmail
 );
 
 usersRouter.post(
