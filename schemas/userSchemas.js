@@ -11,10 +11,17 @@ const joiUserSchemas = Joi.object({
   subscription: Joi.string().valid(...subscriptionList),
 }).messages(customMessages);
 
+const joiUserEmailSchemas = Joi.object({
+  email: Joi.string()
+    .pattern(emailRegexp)
+    .message(emailPaternMessage)
+    .required(),
+}).messages(customMessages);
+
 const joiUpdateSubscription = Joi.object({
   subscription: Joi.string()
     .valid(...subscriptionList)
     .required(),
 }).messages(customMessages);
 
-module.exports = { joiUpdateSubscription, joiUserSchemas };
+module.exports = { joiUpdateSubscription, joiUserEmailSchemas, joiUserSchemas };

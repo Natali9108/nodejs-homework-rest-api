@@ -1,14 +1,7 @@
 const express = require("express");
 const contactsController = require("../../controllers/contacts");
-const { upload, isEmptyBody, validateBody } = require("../../middlewares");
+const { isEmptyBody, validateBody } = require("../../middlewares");
 const schemas = require("../../schemas");
-// import {
-//   upload,
-//   authenticate,
-//   validateBody,
-//   isValidId,
-//   isEmptyBody,
-// } from "../../middlewares/index.js";
 
 const { authenticate, isValidId } = require("../../middlewares");
 
